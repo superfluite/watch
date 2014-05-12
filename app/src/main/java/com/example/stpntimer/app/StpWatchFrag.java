@@ -12,7 +12,7 @@ import android.widget.Chronometer;
 import android.widget.ListView;
 
 
-public class StpWatchFrag extends Fragment {
+public class StpWatchFrag extends Fragment{
 
     Chronometer crnmeter;
     boolean flag=false;
@@ -22,29 +22,33 @@ public class StpWatchFrag extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.stpwatchfrag,null,false);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         crnmeter=(Chronometer)getView().findViewById(R.id.chronometer);
         listView=(ListView)getView().findViewById(R.id.listView);
         Button button;
 
         button=(Button)getView().findViewById(R.id.startbtn);
-        button.setOnClickListener(Start);
+        button.setOnClickListener(start);
         button=(Button)getView().findViewById(R.id.stopbtn);
         button.setVisibility(View.GONE);
-        button.setOnClickListener(Stop);
+        button.setOnClickListener(stop);
         button=(Button)getView().findViewById(R.id.resetbtn);
         button.setVisibility(View.GONE);
-        button.setOnClickListener(Reset);
+        button.setOnClickListener(reset);
         button=(Button)getView().findViewById(R.id.recordbtn);
         button.setVisibility(View.GONE);
-        button.setOnClickListener(Record);
+        button.setOnClickListener(record);
 
         arrayAdapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.listview_custom);
         listView.setAdapter(arrayAdapter);
-
-        return inflater.inflate(R.layout.stpwatchfrag,container,false);
     }
 
-    View.OnClickListener Start=new View.OnClickListener() {
+    View.OnClickListener start=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             crnmeter.setBase(SystemClock.elapsedRealtime()+timestop);
@@ -62,7 +66,7 @@ public class StpWatchFrag extends Fragment {
         }
     };
 
-    View.OnClickListener Stop=new View.OnClickListener() {
+    View.OnClickListener stop=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Button btn=(Button)getView().findViewById(R.id.stopbtn);
@@ -84,10 +88,9 @@ public class StpWatchFrag extends Fragment {
         }
     };
 
-    View.OnClickListener Reset=new View.OnClickListener() {
+    View.OnClickListener reset=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            /*
             crnmeter.stop();
             crnmeter.setBase(SystemClock.elapsedRealtime());
             timestop=0;
@@ -103,11 +106,11 @@ public class StpWatchFrag extends Fragment {
             btn.setVisibility(View.GONE);
             btn=(Button)getView().findViewById(R.id.recordbtn);
             btn.setVisibility(View.GONE);
-            */
+
         }
     };
 
-    View.OnClickListener Record=new View.OnClickListener() {
+    View.OnClickListener record=new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             long rectime=(SystemClock.elapsedRealtime()-crnmeter.getBase());
