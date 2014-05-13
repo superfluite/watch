@@ -133,10 +133,7 @@ public class TimerFrag extends Fragment{
                 }
             }
         }
-        String shour=getStrTime(hour);
-        String smin=getStrTime(min);
-        String ssec=getStrTime(sec);
-        timer.setText(shour+" : "+smin+" : "+ssec);
+        timer.setText(addZero(Integer.toString(hour))+" : "+addZero(Integer.toString(min))+" : "+addZero(Integer.toString(sec)));
     }
 
     private void changeViewVisibility(int id){
@@ -188,9 +185,5 @@ public class TimerFrag extends Fragment{
         String[] array=time.split(" : ");
         int intTime=(Integer.parseInt(array[0])*60*60)+(Integer.parseInt(array[1])*60)+(Integer.parseInt(array[2]));
         return intTime;
-    }
-
-    private String getStrTime(int time){
-        return addZero(Integer.toString(time));
     }
 }

@@ -1,11 +1,11 @@
 package com.example.stpntimer.app;
 
+import android.content.res.Configuration;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 
 public class MainActivity extends FragmentActivity {
@@ -38,9 +37,40 @@ public class MainActivity extends FragmentActivity {
         drawlist.setOnItemClickListener(new MenuClick());
 
         drawer=(DrawerLayout)findViewById(R.id.drawer_list);
+        toggle=new ActionBarDrawerToggle(this, drawer, R.drawable.ic_drawer,R.string.open_drawer,R.string.close_drawer){
+            public void onDrawerClosed(View drawerView){
+                super.onDrawerClosed(drawerView);
+            }
+
+            public void onDrawerOpened(View drawerView){
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        drawer.setDrawerListener(toggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         curFragindex=STPWATCH;
         changeFrag(curFragindex);
     }
+
+    protected void onPostCreate(Bundle savedInstanceState){
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
+    }
+
+    public boolean onOptionsItemsSelected(MenuItem item){
+        if(toggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void changeFrag(int index){
         Fragment frag=null;
         frag=getFrag(index);
@@ -77,6 +107,7 @@ public class MainActivity extends FragmentActivity {
                     changeFrag(curFragindex);
                     break;
             }
+            drawer.closeDrawer(drawlist);
         }
     }
 
@@ -99,6 +130,4 @@ public class MainActivity extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
