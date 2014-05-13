@@ -103,7 +103,7 @@ public class TimerFrag extends Fragment{
         @Override
         public void onClick(View view) {
             countDownTimer.cancel();
-            stopTimer();
+            initTimer();
         }
     };
 
@@ -156,7 +156,7 @@ public class TimerFrag extends Fragment{
         changeViewVisibility(R.id.textView2);
     }
 
-    private void stopTimer(){
+    private void initTimer(){
         startstopVisibility();
         timer.setText("00 : 00 : 00");
         input_hour.setText("");
@@ -176,7 +176,7 @@ public class TimerFrag extends Fragment{
             }
             @Override
             public void onFinish() {
-                stopTimer();
+                initTimer();
             }
         }.start();
     }

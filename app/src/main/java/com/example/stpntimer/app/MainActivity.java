@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     public boolean onOptionsItemsSelected(MenuItem item){
-        if(toggle.onOptionsItemSelected(item)){
+        if (toggle.onOptionsItemSelected(item)) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -82,7 +82,7 @@ public class MainActivity extends FragmentActivity {
 
     public Fragment getFrag(int index){
         Fragment frag=null;
-        switch (index){
+        switch (index) {
             case STPWATCH:
                 frag=new StpWatchFrag();
                 break;
@@ -97,7 +97,7 @@ public class MainActivity extends FragmentActivity {
 
     private class MenuClick implements ListView.OnItemClickListener{
         public void onItemClick(AdapterView<?> adapter, View v, int pos, long id){
-            switch(pos){
+            switch (pos) {
                 case 0:
                     curFragindex=STPWATCH;
                     changeFrag(curFragindex);
