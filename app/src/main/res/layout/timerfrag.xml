@@ -8,58 +8,61 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.stopwatch.app.MainActivity">
 
-<EditText
-    android:id="@+id/edit_hour"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginRight="15dp"
-    android:layout_alignBottom="@+id/textView"
-    android:layout_toLeftOf="@+id/textView"
-    android:hint="Hour"/>
+    <EditText
+        android:id="@+id/edit_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toLeftOf="@+id/textView"
+        android:maxLength="2"
+        android:hint="Hour"/>
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text=":"
-    android:id="@+id/textView2"
-    android:layout_above="@+id/start_stop_button"
-    android:layout_toRightOf="@+id/edit_min"
-    android:layout_marginLeft="16dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:id="@+id/textView2"
+        android:layout_marginLeft="22dp"
+        android:layout_alignBottom="@+id/edit_sec"
+        android:layout_toRightOf="@+id/edit_min" />
 
-<EditText
-    android:id="@+id/edit_min"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="97dp"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:hint="Min"/>
+    <EditText
+        android:id="@+id/edit_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="97dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:maxLength="2"
+        android:hint="Min"/>
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text=":"
-    android:id="@+id/textView"
-    android:layout_alignBottom="@+id/edit_min"
-    android:layout_toLeftOf="@+id/edit_min"
-    android:layout_marginRight="15dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:id="@+id/textView"
+        android:layout_alignBottom="@+id/edit_min"
+        android:layout_toLeftOf="@+id/edit_min"
+        android:layout_marginRight="15dp" />
 
-<EditText
-    android:id="@+id/edit_sec"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignTop="@+id/edit_min"
-    android:layout_toRightOf="@+id/textView2"
-    android:layout_marginLeft="15dp"
-    android:hint="Sec"/>
+    <EditText
+        android:id="@+id/edit_sec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/edit_min"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_marginLeft="15dp"
+        android:maxLength="2"
+        android:hint="Sec"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="START"
-        android:id="@+id/start_stop_button"
+        android:text="Start"
+        android:id="@+id/start_button"
         android:layout_marginTop="77dp"
-        android:layout_below="@+id/edit_hour"
+        android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/edit_hour"
         android:layout_alignStart="@+id/edit_hour"
         android:layout_alignRight="@+id/edit_sec"
@@ -68,9 +71,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00:00"
+        android:text="00 : 00 : 00"
         android:textSize="@dimen/abc_action_bar_title_text_size"
-        android:id="@+id/textView3"
+        android:id="@+id/timer_text"
         android:layout_below="@+id/edit_hour"
         android:layout_alignLeft="@+id/edit_hour"
         android:layout_alignStart="@+id/edit_hour"
@@ -78,5 +81,23 @@
         android:layout_alignRight="@+id/edit_sec"
         android:layout_alignEnd="@+id/edit_sec"
         android:gravity="center"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:id="@+id/stop_button"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/edit_hour"
+        android:layout_toLeftOf="@+id/edit_min" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        android:id="@+id/reset_button"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/edit_min"
+        android:layout_alignRight="@+id/edit_sec" />
 
 </RelativeLayout>
