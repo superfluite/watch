@@ -15,11 +15,11 @@ import android.widget.ListView;
 public class StpWatchFrag extends Fragment{
 
     private Chronometer chronometer;
-    private boolean flag=false;
-    private long timestop=0;
+    private boolean flag = false;
+    private long timestop = 0;
     private ListView listView;
     private ArrayAdapter arrayAdapter;
-    private Button button;
+    private Button startButton, stopButton, resetButton, recordButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,75 +29,73 @@ public class StpWatchFrag extends Fragment{
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        chronometer=(Chronometer)getView().findViewById(R.id.chronometer);
-        listView=(ListView)getView().findViewById(R.id.listView);
+        chronometer = (Chronometer)getView().findViewById(R.id.chronometer);
+        listView = (ListView)getView().findViewById(R.id.listView);
 
-        button=(Button)getView().findViewById(R.id.startbtn);
-        button.setOnClickListener(start);
-        button=(Button)getView().findViewById(R.id.stopbtn);
-        button.setOnClickListener(stop);
-        button=(Button)getView().findViewById(R.id.resetbtn);
-        button.setOnClickListener(reset);
-        button=(Button)getView().findViewById(R.id.recordbtn);
-        button.setOnClickListener(record);
+        startButton = (Button)getView().findViewById(R.id.startbtn);
+        startButton.setOnClickListener(new startClickListener());
+        stopButton = (Button)getView().findViewById(R.id.stopbtn);
+        stopButton.setOnClickListener(new stopClickListener());
+        resetButton = (Button)getView().findViewById(R.id.resetbtn);
+        resetButton.setOnClickListener(new resetClickListener());
+        recordButton = (Button)getView().findViewById(R.id.recordbtn);
+        recordButton.setOnClickListener(new recordClickListener());
 
         changeAllButtonVisibility();
         changeViewVisibility(R.id.startbtn);
 
-        arrayAdapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.listview_custom);
+        arrayAdapter = new ArrayAdapter(getActivity().getApplicationContext(),R.layout.listview_custom);
         listView.setAdapter(arrayAdapter);
     }
 
-    View.OnClickListener start=new View.OnClickListener() {
+    private class startClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             chronometer.setBase(SystemClock.elapsedRealtime()+timestop);
             chronometer.start();
-            flag=true;
+            flag = true;
             changeAllButtonVisibility();
         }
-    };
+    }
 
-    View.OnClickListener stop=new View.OnClickListener() {
+    private class stopClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            button=(Button)getView().findViewById(R.id.stopbtn);
             if (flag) {
-                timestop=chronometer.getBase()-SystemClock.elapsedRealtime();
+                timestop = chronometer.getBase()-SystemClock.elapsedRealtime();
                 chronometer.stop();
-                flag=false;
-                button.setText("RESTART");
+                flag = false;
+                stopButton.setText("RESTART");
             } else {
                 chronometer.setBase(SystemClock.elapsedRealtime() + timestop);
                 chronometer.start();
-                flag=true;
-                button.setText("STOP");
+                flag = true;
+                stopButton.setText("STOP");
             }
         }
-    };
+    }
 
-    View.OnClickListener reset=new View.OnClickListener() {
+    private class resetClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             chronometer.stop();
             chronometer.setBase(SystemClock.elapsedRealtime());
-            timestop=0;
+            timestop = 0;
             arrayAdapter.clear();
-            flag=false;
+            flag = false;
             changeAllButtonVisibility();
-            button=(Button)getView().findViewById(R.id.stopbtn);
-            button.setText("STOP");
+            stopButton.setText("STOP");
         }
-    };
+    }
 
-    View.OnClickListener record=new View.OnClickListener() {
+    private class recordClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             if (flag) {
                 long rectime = (SystemClock.elapsedRealtime() - chronometer.getBase());
                 String recmin = Long.toString(rectime / (60 * 1000));
                 if (recmin.length() < 2) {
-                    recmin = "0" + recmin;
+                    recmin  = "0" + recmin;
                 }
                 String recsec = Double.toString((rectime % (60 * 1000)) / 1000.0);
                 if (recsec.charAt(1) == '.') {
@@ -108,10 +106,10 @@ public class StpWatchFrag extends Fragment{
                 arrayAdapter.notifyDataSetChanged();
             }
         }
-    };
+    }
 
     private void changeViewVisibility(int id){
-        View Target=(View)getView().findViewById(id);
+        View Target = (View)getView().findViewById(id);
         if (Target.getVisibility()==View.VISIBLE) {
             Target.setVisibility(View.GONE);
         } else {

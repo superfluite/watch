@@ -17,15 +17,20 @@ import android.widget.ListView;
 
 public class MainActivity extends FragmentActivity {
 
-    final String TAG="MainActivity";
+    private final String TAG = "MainActivity";
 
-    String[] menus={"Stop Watch", "Timer", "Alarm"};
-    ListView drawlist;
+    private String[] menus = {"Stop Watch", "Timer", "Alarm"};    //symentic하게 작동할 수 있도록 고민해보기
+    private ListView drawlist;
 
-    int curFragindex;
-    public final static int STPWATCH=0;
-    public final static int TIMER=1;
-    public final static int ALARM=2;
+    private enum Fragmentindex {
+        STOPWATCH(0), TIMER(1), ALARM(2);
+        private int value;
+        private Fragmentindex(int value){
+            this.value = value;
+        }
+    }
+
+    private Fragmentindex currentFragmentIndex;
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -33,12 +38,12 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        drawlist=(ListView)findViewById(R.id.drawlist);
+        drawlist = (ListView)findViewById(R.id.drawlist);
         drawlist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,menus));
         drawlist.setOnItemClickListener(new MenuClick());
 
-        drawer=(DrawerLayout)findViewById(R.id.drawer_list);
-        toggle=new ActionBarDrawerToggle(this, drawer, R.drawable.ic_drawer,R.string.open_drawer,R.string.close_drawer){
+        drawer = (DrawerLayout)findViewById(R.id.drawer_list);
+        toggle = new ActionBarDrawerToggle(this, drawer, R.drawable.ic_drawer,R.string.open_drawer,R.string.close_drawer){
             public void onDrawerClosed(View drawerView){
                 super.onDrawerClosed(drawerView);
             }
@@ -50,8 +55,8 @@ public class MainActivity extends FragmentActivity {
         drawer.setDrawerListener(toggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        curFragindex=STPWATCH;
-        changeFrag(curFragindex);
+        currentFragmentIndex = Fragmentindex.STOPWATCH;
+        changeFrag(currentFragmentIndex);
     }
 
     protected void onPostCreate(Bundle savedInstanceState){
@@ -72,26 +77,26 @@ public class MainActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void changeFrag(int index){
-        Fragment frag=null;
-        frag=getFrag(index);
-        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+    public void changeFrag(Fragmentindex index){
+        Fragment frag = null;
+        frag = getFrag(index);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frag_container,frag);
         transaction.addToBackStack(null);
         transaction.commit();
     }
 
-    public Fragment getFrag(int index){
-        Fragment frag=null;
+    public Fragment getFrag(Fragmentindex index){
+        Fragment frag = null;
         switch (index) {
-            case STPWATCH:
-                frag=new StpWatchFrag();
+            case STOPWATCH:
+                frag = new StpWatchFrag();
                 break;
             case TIMER:
-                frag=new TimerFrag();
+                frag = new TimerFrag();
                 break;
             case ALARM:
-                frag=new AlarmFrag();
+                frag = new AlarmFrag();
                 break;
             default:
                 break;
@@ -103,16 +108,16 @@ public class MainActivity extends FragmentActivity {
         public void onItemClick(AdapterView<?> adapter, View v, int pos, long id){
             switch (pos) {
                 case 0:
-                    curFragindex=STPWATCH;
-                    changeFrag(curFragindex);
+                    currentFragmentIndex = Fragmentindex.STOPWATCH;
+                    changeFrag(currentFragmentIndex);
                     break;
                 case 1:
-                    curFragindex=TIMER;
-                    changeFrag(curFragindex);
+                    currentFragmentIndex = Fragmentindex.TIMER;
+                    changeFrag(currentFragmentIndex);
                     break;
                 case 2:
-                    curFragindex=ALARM;
-                    changeFrag(curFragindex);
+                    currentFragmentIndex = Fragmentindex.ALARM;
+                    changeFrag(currentFragmentIndex);
                     break;
             }
             drawer.closeDrawer(drawlist);

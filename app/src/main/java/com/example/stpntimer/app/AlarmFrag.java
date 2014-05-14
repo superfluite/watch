@@ -17,7 +17,7 @@ public class AlarmFrag extends Fragment {
     private Button button;
     private ListView alarmList;
     private ArrayAdapter arrayAdapter;
-    private View v;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,40 +27,40 @@ public class AlarmFrag extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        v=getView();
+        view = getView();
 
-        timePicker=(TimePicker)v.findViewById(R.id.timePicker);
-        alarmList=(ListView)v.findViewById(R.id.alarm_list);
+        timePicker = (TimePicker)view.findViewById(R.id.timePicker);
+        alarmList = (ListView)view.findViewById(R.id.alarm_list);
 
-        button=(Button)v.findViewById(R.id.add_button);
+        button = (Button)view.findViewById(R.id.add_button);
         button.setOnClickListener(add_alarm);
 
-        arrayAdapter=new ArrayAdapter(getActivity().getApplicationContext(),R.layout.listview_custom);
+        arrayAdapter = new ArrayAdapter(getActivity().getApplicationContext(),R.layout.listview_custom);
         alarmList.setAdapter(arrayAdapter);
     }
 
-    View.OnClickListener add_alarm=new View.OnClickListener() {
+    View.OnClickListener add_alarm = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            int hour=timePicker.getCurrentHour();
-            int min=timePicker.getCurrentMinute();
+            int hour = timePicker.getCurrentHour();
+            int min = timePicker.getCurrentMinute();
             String am_pm;
-            if (hour>12) {
-                am_pm="pm";
-                hour-=12;
+            if (hour > 12) {  //시간이 12시 이상일 경우(24시 형식임)
+                am_pm = "pm";
+                hour -= 12;
             } else {
-                am_pm="am";
+                am_pm = "am";
             }
-            String t=addZero(Integer.toString(hour))+":"+addZero(Integer.toString(min))+" "+am_pm;
+            String t = addZero(Integer.toString(hour))+":"+addZero(Integer.toString(min))+" "+am_pm;
             arrayAdapter.add(t);
         }
     };
 
     private String addZero(String input){
         if (input.isEmpty()) {
-            input="00"+input;
+            input = "00"+input;
         } else if (input.length()<2) {
-            input="0"+input;
+            input = "0"+input;
         }
         return input;
     }
