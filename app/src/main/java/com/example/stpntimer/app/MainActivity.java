@@ -19,12 +19,13 @@ public class MainActivity extends FragmentActivity {
 
     final String TAG="MainActivity";
 
-    String[] menus={"Stop Watch", "Timer"};
+    String[] menus={"Stop Watch", "Timer", "Alarm"};
     ListView drawlist;
 
     int curFragindex;
     public final static int STPWATCH=0;
     public final static int TIMER=1;
+    public final static int ALARM=2;
 
     private DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
@@ -89,6 +90,9 @@ public class MainActivity extends FragmentActivity {
             case TIMER:
                 frag=new TimerFrag();
                 break;
+            case ALARM:
+                frag=new AlarmFrag();
+                break;
             default:
                 break;
         }
@@ -104,6 +108,10 @@ public class MainActivity extends FragmentActivity {
                     break;
                 case 1:
                     curFragindex=TIMER;
+                    changeFrag(curFragindex);
+                    break;
+                case 2:
+                    curFragindex=ALARM;
                     changeFrag(curFragindex);
                     break;
             }
